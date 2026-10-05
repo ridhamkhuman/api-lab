@@ -69,7 +69,7 @@ const presets = {
     paramVal: "3",
     body: "",
     lesson:
-      "GET many users from a free fake API. Param _limit=3 asks for only 3 results. No API key needed. Press Send → expect 200.",
+      "Beginner step 1: GET = ask for data. This free API returns users. _limit=3 means only 3 users. No login needed. Press Send and look for status 200.",
   },
   user: {
     method: "GET",
@@ -79,7 +79,7 @@ const presets = {
     paramVal: "",
     body: "",
     lesson:
-      "GET one user by id. The “1” in /users/1 is a path parameter. Press Send and find name + email in the JSON.",
+      "Beginner step 2: the number 1 in /users/1 is the user id (path parameter). After Send, find \"name\" and \"email\" in the JSON answer.",
   },
   create: {
     method: "POST",
@@ -93,7 +93,7 @@ const presets = {
       2
     ),
     lesson:
-      "POST creates a new post. Body tab has JSON. Fake API returns 201 and adds an id. Open Body tab to edit the text, then Send.",
+      "Beginner step 3: POST = create new. Open Body tab — that JSON is the new post. Send → expect 201 and a new id. You are creating data now.",
   },
   update: {
     method: "PUT",
@@ -107,7 +107,7 @@ const presets = {
       2
     ),
     lesson:
-      "PUT replaces the whole post #1. You send the complete object. Compare this with PATCH next.",
+      "Beginner step 4: PUT = replace the whole post. You must send the full object. Compare with PATCH in the next step.",
   },
   patch: {
     method: "PATCH",
@@ -117,7 +117,7 @@ const presets = {
     paramVal: "",
     body: JSON.stringify({ title: "Only the title changes" }, null, 2),
     lesson:
-      "PATCH updates only the title. Other fields stay as they were. This is the common “edit one field” method.",
+      "Beginner step 5: PATCH = edit only some fields. Here we change only title. This is how most “edit form” screens work.",
   },
   remove: {
     method: "DELETE",
@@ -127,7 +127,7 @@ const presets = {
     paramVal: "",
     body: "",
     lesson:
-      "DELETE removes post #1 (simulated by the fake API). Expect 200. In real apps you often need auth before delete is allowed.",
+      "Beginner step 6: DELETE = remove. No body needed. Fake API returns success. In real company APIs you usually need permission first.",
   },
   dog: {
     method: "GET",
@@ -137,7 +137,7 @@ const presets = {
     paramVal: "",
     body: "",
     lesson:
-      "Fun GET demo. Response JSON has message = image URL and status = success. Copy the URL into a browser to see the dog photo.",
+      "Fun free GET: response has message = image link. Copy that link into a browser tab to see the dog. Builds confidence fast.",
   },
   weather: {
     method: "GET",
@@ -147,7 +147,7 @@ const presets = {
     paramVal: "",
     body: "",
     lesson:
-      "Real weather for Delhi (lat/long in the URL). Free, no key. Look for current.temperature_2m in the response.",
+      "Real free weather API (Delhi lat/long). No key. After Send, open current.temperature_2m — that number is live weather data.",
   },
   basic: {
     method: "GET",
@@ -159,7 +159,7 @@ const presets = {
     paramVal: "",
     body: "",
     lesson:
-      "Basic Auth demo. Username postman + password password → 200. Change password to wrong → 401 Unauthorized. Open Authorization tab to see the fields.",
+      "Auth lesson: username postman + password password → 200. Now change password to wrong and Send again → 401. That is how APIs reject bad login.",
   },
   apikey: {
     method: "GET",
@@ -171,7 +171,7 @@ const presets = {
     paramVal: "",
     body: "",
     lesson:
-      "API Key shape demo. We send header X-Api-Key: demo-key-abc123. httpbin echoes headers back so you can prove it was sent. Real APIs would validate the key.",
+      "API key lesson: we attach header X-Api-Key. httpbin echoes headers so you can see it. Real products give you a real key from their dashboard — this value is only a teaching demo.",
   },
 };
 
