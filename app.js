@@ -1,23 +1,63 @@
-const methodExamples = {
-  GET: `GET https://jsonplaceholder.typicode.com/posts/1
-Headers: Accept: application/json
-→ 200 OK with the post object`,
-  POST: `POST https://jsonplaceholder.typicode.com/posts
-Body (JSON):
+const methodDetails = {
+  GET: {
+    title: "GET — Read / fetch data",
+    when: "Use when you want to retrieve information. Opening a profile, listing users, downloading a report.",
+    body: "No request body. Filters go in the URL as query params.",
+    example: `GET https://jsonplaceholder.typicode.com/posts/1
+Header: Accept: application/json`,
+    expect: "200 OK + JSON object/array. Does not change server data.",
+    postman: "1) Method = GET  2) Paste URL  3) Auth if needed  4) Send  5) Read Body → Pretty",
+  },
+  POST: {
+    title: "POST — Create something new",
+    when: "Use when you create a new resource: new user, new order, submit a form.",
+    body: "Yes — JSON body with the new fields.",
+    example: `POST https://jsonplaceholder.typicode.com/posts
+Content-Type: application/json
+
 {
   "title": "API Lab",
   "body": "Learning POST",
   "userId": 1
-}
-→ 201 Created with the new post (+ id)`,
-  PUT: `PUT https://jsonplaceholder.typicode.com/posts/1
-Body (JSON): full replacement of the post
-→ 200 OK with the updated resource`,
-  PATCH: `PATCH https://jsonplaceholder.typicode.com/posts/1
-Body (JSON): { "title": "Only this field changes" }
-→ 200 OK with merged fields`,
-  DELETE: `DELETE https://jsonplaceholder.typicode.com/posts/1
-→ 200 OK (JSONPlaceholder returns {})`,
+}`,
+    expect: "201 Created (or 200). Response often includes a new id.",
+    postman: "1) Method = POST  2) Body → raw → JSON  3) Paste JSON  4) Send",
+  },
+  PUT: {
+    title: "PUT — Replace the whole resource",
+    when: "Use when you send the full updated object. Missing fields may be cleared depending on the API.",
+    body: "Yes — full resource JSON.",
+    example: `PUT https://jsonplaceholder.typicode.com/posts/1
+
+{
+  "id": 1,
+  "title": "Replaced title",
+  "body": "Full new body",
+  "userId": 1
+}`,
+    expect: "200 OK with the replaced resource.",
+    postman: "1) Method = PUT  2) URL includes the id  3) Body = full JSON  4) Send",
+  },
+  PATCH: {
+    title: "PATCH — Update only some fields",
+    when: "Use when you change one or two fields (e.g. only title) without resending everything.",
+    body: "Yes — partial JSON with only changed fields.",
+    example: `PATCH https://jsonplaceholder.typicode.com/posts/1
+
+{
+  "title": "Only this field changes"
+}`,
+    expect: "200 OK with the merged resource.",
+    postman: "1) Method = PATCH  2) Body = only fields to change  3) Send",
+  },
+  DELETE: {
+    title: "DELETE — Remove a resource",
+    when: "Use when you delete by id: remove a post, cancel a draft, deactivate a record.",
+    body: "Usually no body. Id is in the URL path.",
+    example: `DELETE https://jsonplaceholder.typicode.com/posts/1`,
+    expect: "200 OK or 204 No Content. JSONPlaceholder returns {}.",
+    postman: "1) Method = DELETE  2) URL with id  3) Auth if required  4) Send",
+  },
 };
 
 const presets = {
@@ -28,7 +68,8 @@ const presets = {
     paramKey: "_limit",
     paramVal: "3",
     body: "",
-    note: "Free fake REST API — no key needed.",
+    lesson:
+      "GET many users from a free fake API. Param _limit=3 asks for only 3 results. No API key needed. Press Send → expect 200.",
   },
   user: {
     method: "GET",
@@ -37,6 +78,8 @@ const presets = {
     paramKey: "",
     paramVal: "",
     body: "",
+    lesson:
+      "GET one user by id. The “1” in /users/1 is a path parameter. Press Send and find name + email in the JSON.",
   },
   create: {
     method: "POST",
@@ -49,6 +92,42 @@ const presets = {
       null,
       2
     ),
+    lesson:
+      "POST creates a new post. Body tab has JSON. Fake API returns 201 and adds an id. Open Body tab to edit the text, then Send.",
+  },
+  update: {
+    method: "PUT",
+    url: "https://jsonplaceholder.typicode.com/posts/1",
+    auth: "none",
+    paramKey: "",
+    paramVal: "",
+    body: JSON.stringify(
+      { id: 1, title: "Fully replaced title", body: "This is a full replace", userId: 1 },
+      null,
+      2
+    ),
+    lesson:
+      "PUT replaces the whole post #1. You send the complete object. Compare this with PATCH next.",
+  },
+  patch: {
+    method: "PATCH",
+    url: "https://jsonplaceholder.typicode.com/posts/1",
+    auth: "none",
+    paramKey: "",
+    paramVal: "",
+    body: JSON.stringify({ title: "Only the title changes" }, null, 2),
+    lesson:
+      "PATCH updates only the title. Other fields stay as they were. This is the common “edit one field” method.",
+  },
+  remove: {
+    method: "DELETE",
+    url: "https://jsonplaceholder.typicode.com/posts/1",
+    auth: "none",
+    paramKey: "",
+    paramVal: "",
+    body: "",
+    lesson:
+      "DELETE removes post #1 (simulated by the fake API). Expect 200. In real apps you often need auth before delete is allowed.",
   },
   dog: {
     method: "GET",
@@ -57,6 +136,8 @@ const presets = {
     paramKey: "",
     paramVal: "",
     body: "",
+    lesson:
+      "Fun GET demo. Response JSON has message = image URL and status = success. Copy the URL into a browser to see the dog photo.",
   },
   weather: {
     method: "GET",
@@ -65,6 +146,8 @@ const presets = {
     paramKey: "",
     paramVal: "",
     body: "",
+    lesson:
+      "Real weather for Delhi (lat/long in the URL). Free, no key. Look for current.temperature_2m in the response.",
   },
   basic: {
     method: "GET",
@@ -75,6 +158,8 @@ const presets = {
     paramKey: "",
     paramVal: "",
     body: "",
+    lesson:
+      "Basic Auth demo. Username postman + password password → 200. Change password to wrong → 401 Unauthorized. Open Authorization tab to see the fields.",
   },
   apikey: {
     method: "GET",
@@ -85,11 +170,34 @@ const presets = {
     paramKey: "",
     paramVal: "",
     body: "",
-    note: "httpbin echoes headers back — proof your API key was sent. Real APIs would validate the key.",
+    lesson:
+      "API Key shape demo. We send header X-Api-Key: demo-key-abc123. httpbin echoes headers back so you can prove it was sent. Real APIs would validate the key.",
   },
 };
 
 const $ = (id) => document.getElementById(id);
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function renderMethodDetail(method) {
+  const d = methodDetails[method];
+  if (!d || !$("methodDetail")) return;
+  $("methodDetail").innerHTML = `
+    <div class="detail-label">${escapeHtml(d.title)}</div>
+    <div class="method-rich">
+      <p><strong>When to use:</strong> ${escapeHtml(d.when)}</p>
+      <p><strong>Body needed?</strong> ${escapeHtml(d.body)}</p>
+      <p><strong>Expected result:</strong> ${escapeHtml(d.expect)}</p>
+      <p><strong>In Postman:</strong> ${escapeHtml(d.postman)}</p>
+      <pre><code>${escapeHtml(d.example)}</code></pre>
+    </div>
+  `;
+}
 
 function setAuthVisibility(type) {
   $("authApiKey").hidden = type !== "apikey";
@@ -127,20 +235,15 @@ function applyPreset(name) {
     el.classList.toggle("active", el.dataset.preset === name);
   });
 
+  if ($("presetLesson") && p.lesson) {
+    $("presetLesson").textContent = p.lesson;
+  }
+
   if (p.auth !== "none") activateTab("auth");
-  else if (p.method !== "GET" && p.body) activateTab("body");
+  else if (p.method !== "GET" && p.method !== "DELETE" && p.body) activateTab("body");
   else activateTab("params");
 
-  if (p.note) {
-    $("responseOut").innerHTML = `<code>${escapeHtml(p.note)}\n\nReady — press Send.</code>`;
-  }
-}
-
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+  $("responseOut").innerHTML = `<code>${escapeHtml(p.lesson || "Ready.")}\n\nPress Send to run this request.</code>`;
 }
 
 function buildUrl() {
@@ -208,16 +311,20 @@ async function sendRequest() {
       /* keep raw */
     }
 
+    const tip = res.ok
+      ? "\n\n// Success — read the JSON above. Status 2xx means it worked."
+      : "\n\n// Failed — check Auth, URL, and body. 401 = wrong login/key. 404 = wrong URL.";
+
     $("statusBadge").textContent = `${res.status} ${res.statusText || ""}`.trim();
     $("statusBadge").className = `status ${res.ok ? "ok" : "err"}`;
     $("timeBadge").textContent = `${ms} ms`;
-    $("responseOut").innerHTML = `<code>${escapeHtml(pretty || "(empty body)")}</code>`;
+    $("responseOut").innerHTML = `<code>${escapeHtml((pretty || "(empty body)") + tip)}</code>`;
   } catch (err) {
     const ms = Math.round(performance.now() - started);
     $("statusBadge").textContent = "Network error";
     $("statusBadge").className = "status err";
     $("timeBadge").textContent = `${ms} ms`;
-    $("responseOut").innerHTML = `<code>${escapeHtml(err.message)}\n\nTip: some APIs block browsers (CORS). The presets on the left are CORS-friendly.</code>`;
+    $("responseOut").innerHTML = `<code>${escapeHtml(err.message)}\n\nTip: some APIs block browsers (CORS). The presets on the left are CORS-friendly. Postman desktop can still call APIs that browsers block.</code>`;
   } finally {
     $("sendBtn").disabled = false;
   }
@@ -227,7 +334,7 @@ document.querySelectorAll(".method-card").forEach((card) => {
   card.addEventListener("click", () => {
     document.querySelectorAll(".method-card").forEach((c) => c.classList.remove("active"));
     card.classList.add("active");
-    $("methodExample").textContent = methodExamples[card.dataset.method];
+    renderMethodDetail(card.dataset.method);
   });
 });
 
@@ -253,3 +360,4 @@ $("urlInput").addEventListener("keydown", (e) => {
 });
 
 setAuthVisibility("none");
+renderMethodDetail("GET");
