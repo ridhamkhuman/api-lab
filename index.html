@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Lab — Learn APIs, Methods & Postman</title>
+  <meta name="description" content="Interactive guide to APIs, HTTP methods, authorization, and a Postman-style request builder with free live API demos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#top">API Lab</a>
+    <nav class="nav">
+      <a href="#methods">Methods</a>
+      <a href="#playground">Playground</a>
+      <a href="#auth">Auth</a>
+      <a href="#live">Live APIs</a>
+    </nav>
+    <a class="btn btn-sm" href="#playground">Try a request</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="grid-fade"></div>
+      </div>
+      <div class="hero-copy">
+        <p class="brand-mark">API Lab</p>
+        <h1>Talk to the internet like Postman does.</h1>
+        <p class="lede">Learn what an API is, every common HTTP method, how API keys &amp; passwords work, and fire real free APIs from a Postman-style UI.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#playground">Open playground</a>
+          <a class="btn btn-ghost" href="#live">Run free GET demo</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="fake-postman">
+          <div class="fp-chrome">
+            <span></span><span></span><span></span>
+            <em>Collections · API Lab Demo</em>
+          </div>
+          <div class="fp-bar">
+            <span class="method get">GET</span>
+            <span class="url">https://jsonplaceholder.typicode.com/users/1</span>
+            <span class="send">Send</span>
+          </div>
+          <pre class="fp-body"><code>{
+  "id": 1,
+  "name": "Leanne Graham",
+  "email": "sincere@april.biz",
+  "company": { "name": "Romaguera-Crona" }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section what" id="what">
+      <div class="section-head">
+        <h2>What is an API?</h2>
+        <p>An API is a menu of URLs a server exposes. You send a request; it returns data (usually JSON).</p>
+      </div>
+      <div class="flow">
+        <div class="flow-step">
+          <span class="flow-n">01</span>
+          <strong>Client</strong>
+          <p>Browser, Postman, or your app builds a request.</p>
+        </div>
+        <div class="flow-arrow" aria-hidden="true">→</div>
+        <div class="flow-step">
+          <span class="flow-n">02</span>
+          <strong>Request</strong>
+          <p>Method + URL + headers + optional body.</p>
+        </div>
+        <div class="flow-arrow" aria-hidden="true">→</div>
+        <div class="flow-step">
+          <span class="flow-n">03</span>
+          <strong>Server</strong>
+          <p>Checks auth, runs logic, talks to a database.</p>
+        </div>
+        <div class="flow-arrow" aria-hidden="true">→</div>
+        <div class="flow-step">
+          <span class="flow-n">04</span>
+          <strong>Response</strong>
+          <p>Status code (200, 401…) + JSON / text / file.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section methods" id="methods">
+      <div class="section-head">
+        <h2>HTTP methods</h2>
+        <p>Same URL can mean different actions depending on the method — like verbs for the web.</p>
+      </div>
+      <div class="method-grid" role="list">
+        <button class="method-card active" data-method="GET" role="listitem">
+          <span class="tag get">GET</span>
+          <strong>Read data</strong>
+          <p>Fetch a resource. Safe &amp; cacheable. No body needed.</p>
+        </button>
+        <button class="method-card" data-method="POST" role="listitem">
+          <span class="tag post">POST</span>
+          <strong>Create</strong>
+          <p>Send new data in the body. Creates a resource.</p>
+        </button>
+        <button class="method-card" data-method="PUT" role="listitem">
+          <span class="tag put">PUT</span>
+          <strong>Replace</strong>
+          <p>Replace the whole resource with what you send.</p>
+        </button>
+        <button class="method-card" data-method="PATCH" role="listitem">
+          <span class="tag patch">PATCH</span>
+          <strong>Update part</strong>
+          <p>Change only some fields of a resource.</p>
+        </button>
+        <button class="method-card" data-method="DELETE" role="listitem">
+          <span class="tag delete">DELETE</span>
+          <strong>Remove</strong>
+          <p>Delete a resource by id or path.</p>
+        </button>
+      </div>
+      <aside class="method-detail" id="methodDetail" aria-live="polite">
+        <div class="detail-label">Example in Postman</div>
+        <pre><code id="methodExample">GET https://jsonplaceholder.typicode.com/posts/1
+Headers: Accept: application/json
+→ 200 OK with the post object</code></pre>
+      </aside>
+    </section>
+
+    <section class="section playground" id="playground">
+      <div class="section-head">
+        <h2>Postman-style playground</h2>
+        <p>Pick a method, edit the URL, add auth if you want, hit Send — real network calls from your browser.</p>
+      </div>
+
+      <div class="pm" id="pm">
+        <aside class="pm-side">
+          <div class="pm-side-title">Collections</div>
+          <button class="pm-item active" data-preset="users">GET · Users list</button>
+          <button class="pm-item" data-preset="user">GET · Single user</button>
+          <button class="pm-item" data-preset="create">POST · Create post</button>
+          <button class="pm-item" data-preset="dog">GET · Random dog</button>
+          <button class="pm-item" data-preset="weather">GET · Weather (free)</button>
+          <button class="pm-item" data-preset="basic">GET · Basic Auth demo</button>
+          <button class="pm-item" data-preset="apikey">GET · API Key demo</button>
+        </aside>
+
+        <div class="pm-main">
+          <div class="pm-request">
+            <select id="methodSelect" aria-label="HTTP method">
+              <option>GET</option>
+              <option>POST</option>
+              <option>PUT</option>
+              <option>PATCH</option>
+              <option>DELETE</option>
+            </select>
+            <input id="urlInput" type="url" spellcheck="false" value="https://jsonplaceholder.typicode.com/users" aria-label="Request URL" />
+            <button class="btn send-btn" id="sendBtn" type="button">Send</button>
+          </div>
+
+          <div class="pm-tabs" role="tablist">
+            <button class="pm-tab active" data-tab="params" role="tab">Params</button>
+            <button class="pm-tab" data-tab="auth" role="tab">Authorization</button>
+            <button class="pm-tab" data-tab="headers" role="tab">Headers</button>
+            <button class="pm-tab" data-tab="body" role="tab">Body</button>
+          </div>
+
+          <div class="pm-panels">
+            <div class="pm-panel active" id="tab-params">
+              <p class="hint">Query params append to the URL as <code>?key=value</code>. Example: <code>?_limit=3</code></p>
+              <div class="kv">
+                <input id="paramKey" placeholder="Key" value="_limit" />
+                <input id="paramVal" placeholder="Value" value="3" />
+              </div>
+            </div>
+
+            <div class="pm-panel" id="tab-auth">
+              <label class="field">
+                <span>Auth type</span>
+                <select id="authType">
+                  <option value="none">No Auth</option>
+                  <option value="apikey">API Key</option>
+                  <option value="basic">Basic Auth (username + password)</option>
+                  <option value="bearer">Bearer Token</option>
+                </select>
+              </label>
+              <div class="auth-fields" id="authApiKey" hidden>
+                <label class="field"><span>Key name</span><input id="apiKeyName" value="X-Api-Key" /></label>
+                <label class="field"><span>Key value</span><input id="apiKeyValue" value="demo-key-abc123" /></label>
+                <p class="hint">An <strong>API key</strong> is a secret string the provider gives you. You send it in a header (or query) so the server knows who is calling. Never commit real keys to git or share them in chat.</p>
+              </div>
+              <div class="auth-fields" id="authBasic" hidden>
+                <label class="field"><span>Username</span><input id="basicUser" value="postman" /></label>
+                <label class="field"><span>Password</span><input id="basicPass" type="password" value="password" /></label>
+                <p class="hint">Basic Auth encodes <code>username:password</code> as Base64 and sends <code>Authorization: Basic …</code>. Demo server: httpbin expects user <code>postman</code> / pass <code>password</code>.</p>
+              </div>
+              <div class="auth-fields" id="authBearer" hidden>
+                <label class="field"><span>Token</span><input id="bearerToken" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.demo" /></label>
+                <p class="hint">Bearer tokens (often JWTs) go in <code>Authorization: Bearer &lt;token&gt;</code>. Used by OAuth / login APIs.</p>
+              </div>
+            </div>
+
+            <div class="pm-panel" id="tab-headers">
+              <div class="kv">
+                <input id="headerKey" placeholder="Header" value="Accept" />
+                <input id="headerVal" placeholder="Value" value="application/json" />
+              </div>
+              <p class="hint">Custom headers merge with auth headers when you Send.</p>
+            </div>
+
+            <div class="pm-panel" id="tab-body">
+              <textarea id="bodyInput" rows="8" spellcheck="false" placeholder='{"title":"API Lab","body":"Hello from Postman UI","userId":1}'></textarea>
+            </div>
+          </div>
+
+          <div class="pm-response">
+            <div class="pm-response-meta">
+              <span>Response</span>
+              <span id="statusBadge" class="status idle">—</span>
+              <span id="timeBadge" class="muted">—</span>
+            </div>
+            <pre id="responseOut" class="response-out"><code>Hit Send to see JSON here.
+Tip: start with “GET · Users list” from the left.</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section auth-section" id="auth">
+      <div class="section-head">
+        <h2>Authorization cheat sheet</h2>
+        <p>Three patterns you’ll see every week in Postman and real products.</p>
+      </div>
+      <div class="auth-grid">
+        <article>
+          <h3>API Key</h3>
+          <p>Provider gives you a long secret. You paste it into Postman → Authorization → API Key, or a header like <code>X-Api-Key</code>.</p>
+          <pre><code>X-Api-Key: your_key_here</code></pre>
+        </article>
+        <article>
+          <h3>Username + password</h3>
+          <p>Basic Auth. Postman has a “Basic Auth” type — fill user/pass; it builds the header for you.</p>
+          <pre><code>Authorization: Basic cG9zdG1hbjpwYXNzd29yZA==</code></pre>
+        </article>
+        <article>
+          <h3>Bearer / OAuth</h3>
+          <p>Login once, get a token, send it on every request until it expires.</p>
+          <pre><code>Authorization: Bearer eyJhbGciOi…</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section live" id="live">
+      <div class="section-head">
+        <h2>Free APIs — no signup</h2>
+        <p>Click any tile to load it into the playground and fetch live data.</p>
+      </div>
+      <div class="free-grid">
+        <button class="free-card" data-preset="users">
+          <span class="free-label">JSONPlaceholder</span>
+          <strong>Fake users &amp; posts</strong>
+          <p>Perfect for GET / POST practice. No API key.</p>
+        </button>
+        <button class="free-card" data-preset="dog">
+          <span class="free-label">Dog CEO</span>
+          <strong>Random dog photo</strong>
+          <p>Fun GET that returns an image URL in JSON.</p>
+        </button>
+        <button class="free-card" data-preset="weather">
+          <span class="free-label">Open-Meteo</span>
+          <strong>Live weather</strong>
+          <p>Real forecasts. Free, no key required.</p>
+        </button>
+        <button class="free-card" data-preset="basic">
+          <span class="free-label">httpbin</span>
+          <strong>Basic Auth test</strong>
+          <p>Returns 200 only if user/pass are correct.</p>
+        </button>
+      </div>
+      <div class="key-callout">
+        <h3>So… what is an API key?</h3>
+        <p>It is <em>not</em> something this page invents for you. A real product (Stripe, Maps, OpenAI, your company’s gateway) generates a key in their dashboard. You copy it into Postman once, store it as an environment variable, and never paste it into public chats or GitHub.</p>
+        <p>In this lab, the “API Key demo” shows the <strong>shape</strong> of the header. The free APIs above work without a key so you can learn safely.</p>
+      </div>
+    </section>
+
+    <section class="section postman-tips">
+      <div class="section-head">
+        <h2>Postman UI map</h2>
+        <p>When you open real Postman, these are the same zones you just used.</p>
+      </div>
+      <ol class="tips">
+        <li><strong>New → HTTP Request</strong> — blank request, like our playground.</li>
+        <li><strong>Method dropdown + URL bar</strong> — choose GET/POST/… and paste the endpoint.</li>
+        <li><strong>Params / Authorization / Headers / Body tabs</strong> — same tabs as above.</li>
+        <li><strong>Send</strong> — fires the call; Body / Pretty shows JSON.</li>
+        <li><strong>Environments</strong> — store <code>{{baseUrl}}</code> and <code>{{apiKey}}</code> so secrets stay out of the URL field.</li>
+        <li><strong>Collections</strong> — group requests for your team (Users, Auth, Orders…).</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><strong>API Lab</strong> · built for learning · share this page with your team</p>
+    <p class="muted">Uses public demos: JSONPlaceholder, Dog CEO, Open-Meteo, httpbin. Educational only — do not send real production secrets here.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
